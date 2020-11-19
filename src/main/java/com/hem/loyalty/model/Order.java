@@ -11,6 +11,29 @@ public class Order {
 	private Date orderDate;
 	private double totalAmount;
 	private String currency;
+	private String companyId;
+	private String siteId;
+	private String userId;
+	
+	
+	public String getCompanyId() {
+		return companyId;
+	}
+	public void setCompanyId(String companyId) {
+		this.companyId = companyId;
+	}
+	public String getSiteId() {
+		return siteId;
+	}
+	public void setSiteId(String siteId) {
+		this.siteId = siteId;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 	public String getOrderId() {
 		return orderId;
 	}

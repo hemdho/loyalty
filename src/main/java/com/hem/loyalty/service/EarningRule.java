@@ -1,10 +1,13 @@
 package com.hem.loyalty.service;
 
+import java.util.Date;
 import java.util.Set;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.hem.auth.model.User;
+import com.hem.loyalty.model.Level;
 @Document
 public abstract class EarningRule {
 	
@@ -18,7 +21,9 @@ public abstract class EarningRule {
     @DBRef
     private Set<Level> levels;
     private String type;
-    
+    private Date createdDate;
+    @DBRef
+    private User user;
 
 	 public abstract String getId(); 
      public abstract void setId(String id);
@@ -101,6 +106,18 @@ public abstract class EarningRule {
 
 	public void setPriority(int priority) {
 		this.priority = priority;
+	}
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 

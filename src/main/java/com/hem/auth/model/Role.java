@@ -20,9 +20,9 @@ public class Role {
     @Size(max = 20)
     private String name;
     
-    private RecordStatus status;
+    private boolean enabled;
     
-    private Set<Short> privileges=new HashSet();
+    private Set<Short> privileges;
     
     
     public Role() {
@@ -36,6 +36,7 @@ public class Role {
     public Role(String id,String name,Short[] privileges) {
     	this.id=id;
     	this.name=name;
+    	this.privileges=new HashSet<Short>();
     	for(Short privilege:privileges) {
     	  this.privileges.add(privilege);
     	}
@@ -54,18 +55,20 @@ public class Role {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public RecordStatus getStatus() {
-		return status;
+	
+	public boolean isEnabled() {
+		return enabled;
 	}
-	public void setStatus(RecordStatus status) {
-		this.status = status;
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+	public void setPrivileges(Set<Short> privileges) {
+		this.privileges = privileges;
 	}
 	public Set<Short> getPrivileges() {
 		return privileges;
 	}
-	public void setPrivilleges(Set<Short> privileges) {
-		this.privileges = privileges;
-	}
+	
     
     
 }

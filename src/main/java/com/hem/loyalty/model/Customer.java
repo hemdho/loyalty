@@ -1,7 +1,8 @@
 package com.hem.loyalty.model;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.data.annotation.CreatedBy;
@@ -11,47 +12,65 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.hem.auth.model.User;
-import com.hem.loyalty.service.Level;
+import com.hem.common.util.CustomDateTimeSerializer;
 
 @Document(collection = "customers")
 public class Customer {
 	@Transient
-    public static final String SEQUENCE_NAME = "customer_sequence";
-     @Id
-	 private Long id;
-	 private String firstName;
-	 private String lastName;
-	 private String middleName;
-	 private Date dob;
-	 private Date annyversaryDate;
-	 private String gender;
-	 private String mobileNo;
-	 private String emailid;
-	 @DBRef
-	 private Set<Level> levels;
-	 
-	 
-	 
-	 public Set<Level> getLevels() {
+	public static final String SEQUENCE_NAME = "customer_sequence";
+	@Id
+	private Long id;
+	private String firstName;
+	private String lastName;
+	private String middleName;
+	private Date dob;
+	private Date annyversaryDate;
+	private String gender;
+	private String mobileNo;
+	private String emailid;
+	@DBRef
+	private List<Level> levels;
+	@DBRef
+	private Company company;
+	private boolean enabled;
+
+	@CreatedBy
+	private User user;
+	@CreatedDate
+	@JsonSerialize(using = CustomDateTimeSerializer.class)
+	private Date createdDate;
+
+	private List<Address> addresses = new ArrayList<Address>();
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
+	}
+
+	public List<Level> getLevels() {
 		return levels;
 	}
 
-	public void setLevels(Set<Level> levels) {
+	public void setLevels(List<Level> levels) {
 		this.levels = levels;
 	}
 
 	public static String getSequenceName() {
 		return SEQUENCE_NAME;
 	}
-
-	@CreatedBy
-	 private User user;
-	 @CreatedDate
-	// @JsonSerialize(using=CustomDateTimeSerializer.class)
-	 private Date createdDate;
-	 
-	 private Set<Address> addresses=new HashSet<Address>();
 
 	public Long getId() {
 		return id;
@@ -141,14 +160,13 @@ public class Customer {
 		this.createdDate = createdDate;
 	}
 
-	public Set<Address> getAddresses() {
+	public List<Address> getAddresses() {
 		return addresses;
 	}
 
-	public void setAddresses(Set<Address> addresses) {
+	public void setAddresses(List<Address> addresses) {
 		this.addresses = addresses;
+
 	}
-	 
-	 
-	
+
 }

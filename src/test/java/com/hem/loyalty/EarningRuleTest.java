@@ -9,18 +9,18 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.hem.loyalty.service.EarningRuleService;
 
-@SpringBootTest
-@DirtiesContext
-@ExtendWith(SpringExtension.class)
+//@SpringBootTest
+//@DirtiesContext
+//@ExtendWith(SpringExtension.class)
 public class EarningRuleTest {
 
-	@Autowired
-	EarningRuleService earningRuleService;
+	//@Autowired
+	//EarningRuleService earningRuleService;
 	
 	
-	@Test
+	//@Test
 	public void createEarningRule() {
-		earningRuleService.createEarningRule();
+		//earningRuleService.createEarningRule();
 	}
 	
 }

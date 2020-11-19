@@ -1,14 +1,15 @@
 package com.hem.loyalty.model;
 
-import java.time.OffsetDateTime;
 import java.util.Date;
 
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hem.auth.model.User;
 
 @Document
@@ -23,12 +24,25 @@ public class Address {
 	private String street2;
 	private String street3;
 	private String area;
+	private String city;
+	private String state;
 	private String postcode;
+	private boolean enabled;
 	
+	
+	public boolean isEnabled() {
+		return enabled;
+	}
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
 	@CreatedBy
+	@DBRef
+	@JsonIgnore
 	 private User user;
 	 @CreatedDate
 	// @JsonSerialize(using=CustomDateTimeSerializer.class)
+	 @JsonIgnore
 	 private Date createdDate;
 	public Long getId() {
 		return id;
@@ -77,6 +91,18 @@ public class Address {
 	}
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
 	}
 	
 	

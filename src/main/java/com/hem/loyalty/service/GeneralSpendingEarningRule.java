@@ -11,6 +11,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.hem.loyalty.model.Customer;
+import com.hem.loyalty.model.Level;
 import com.hem.loyalty.model.Order;
 import com.hem.loyalty.model.OrderItem;
 import com.hem.loyalty.model.Points;
@@ -62,6 +63,8 @@ public class GeneralSpendingEarningRule extends EarningRule implements EarningRu
 		points.setOrderDate(t.getOrderDate());
 		points.setRules( this.getName());
 		
+		//points.setCompany(company);
+       		
 		if(orderTotal<minOrderValue) {
 		    int totalPoints = (int)(orderTotal * getPointValue());
 			points.setPoints( totalPoints );
@@ -73,14 +76,14 @@ public class GeneralSpendingEarningRule extends EarningRule implements EarningRu
 	public boolean isCriteriaMatches(Order t) {
 		Customer c = t.getCustomer();
 		// check whether customer is exist or not
-		Optional<Customer> customerOptional = customerRepo.findByMobileNo(c.getMobileNo());
+		Optional<Customer> customerOptional = customerRepo.findByMobileNo(t.getCompanyId(),  c.getMobileNo());
 		if (customerOptional.isEmpty()) {
 			// customer doesn't exist;
 			// if customer is new and level in rule is applicable to all return true else
 			// return false;
 			return true;
 		} else {
-			Set<Level> levels = customerOptional.get().getLevels();
+			List<Level> levels = customerOptional.get().getLevels();
 			for (Level level : levels) {
 				if (getLevels().contains(level)) {
 					return true;

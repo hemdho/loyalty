@@ -22,6 +22,10 @@ public class User implements Serializable {
 	@Size(max = 20)
 	private String username;
 	
+	private String firstName;
+	private String lastName;
+	
+	
 	@NotBlank
 	@Size(max = 50)
 	@Email
@@ -35,7 +39,11 @@ public class User implements Serializable {
 	private boolean enabled;
 	
 	@DBRef
-	private Set<Role> roles = new HashSet();
+	private Set<Role> roles ;
+	
+	private Date createdDate;
+	
+	
 	public String getId() {
 		return id;
 	}
@@ -73,9 +81,9 @@ public class User implements Serializable {
 		this.roles = roles;
 	}
 	
-	public void setRoles(List<Role> roles_) {
+	/*public void setRoles(List<Role> roles_) {
 		roles_.stream().forEach(role->roles.add(role));
-	}
+	}*/
 	public boolean isEnabled() {
 		return enabled;
 	}
@@ -83,5 +91,22 @@ public class User implements Serializable {
 		this.enabled = enabled;
 	}
 	
-	
+	public String getFirstName() {
+		return firstName;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}	
 }

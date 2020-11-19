@@ -13,14 +13,14 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.DBObject;
 
-@DataMongoTest
-@ExtendWith(SpringExtension.class)
+//@DataMongoTest
+//@ExtendWith(SpringExtension.class)
 public class SpringBootIntegrationTest {
 
 	@DisplayName("given object to save"
 	        + " when save object using MongoDB template"
 	        + " then object is saved")
-	    @Test
+	 //   @Test
 	    public void test(@Autowired MongoTemplate mongoTemplate) {
 	        // given
 	        DBObject objectToSave = BasicDBObjectBuilder.start()

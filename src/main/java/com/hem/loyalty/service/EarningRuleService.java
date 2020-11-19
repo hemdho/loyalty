@@ -8,6 +8,8 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hem.loyalty.dto.GeneralSpendingRuleDto;
+import com.hem.loyalty.model.Level;
 import com.hem.loyalty.repository.EarningRuleRepository;
 @Service
 public class EarningRuleService {
@@ -15,7 +17,14 @@ public class EarningRuleService {
 	@Autowired
 	private EarningRuleRepository earningRuleRepo;
 	
-	
+
+	public GeneralSpendingEarningRule createGeneralSpendingEarningRule(GeneralSpendingRuleDto ruleDto) {
+		GeneralSpendingEarningRule rule=ruleDto.toGeneralSpendingEarningRule();
+		rule.setId(UUID.randomUUID().toString());
+		rule.setCreatedDate(new Date());
+		rule=(GeneralSpendingEarningRule)earningRuleRepo.save(rule);
+		return rule;
+	}
 	public void createEarningRule() {
 		GeneralSpendingEarningRule earningRule=new GeneralSpendingEarningRule();
 		Activity activity=new Activity();
@@ -30,7 +39,7 @@ public class EarningRuleService {
 		excludedSKU.add("345");
 		earningRule.setExcludedSKU(excludedSKU);
 		Level level= new Level();
-		level.setId(UUID.randomUUID().toString());
+		//level.setId(UUID.randomUUID().toString());
 		level.setName("GOLD");
 		Set<Level> levels=new HashSet<Level>();
 		levels.add(level);
