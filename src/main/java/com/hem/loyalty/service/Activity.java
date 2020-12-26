@@ -42,5 +42,14 @@ public class Activity {
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
-
+    
+	public boolean isDateWithingRange() {
+		Date currentDate= new Date();
+		if( (startDate!=null && endDate!=null && startDate.before(currentDate) && endDate.after(currentDate))
+			||( startDate!=null && endDate==null && startDate.before(currentDate))
+			|| (startDate==null && endDate!=null && endDate.after(currentDate) )
+			
+		  ) return true;
+		else return false;
+	}
 }

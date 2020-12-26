@@ -11,10 +11,15 @@ public class UserData implements Serializable{
 	public UserData() {
 		
 	}
-	
+	public UserData(String userId) {
+		setUserId(userId);
+	}
 	public UserData(User user) {
-		setUserId(user.getId());
-		setName(user.getFirstName() + user.getLastName() + "(" +  user.getUsername() +")");
+		if(user!=null && user.getId()!=null) {
+			setUserId(user.getId());
+			setName(user.getFirstName() + user.getLastName() + "(" +  user.getUsername() +")");	
+		}
+		
 	}
 	public String getUserId() {
 		return userId;

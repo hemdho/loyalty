@@ -43,7 +43,7 @@ public class CompanyController {
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public CompanyDto createCompany(@RequestBody CompanyDto companyDto,Principal principal) {
 		
-		User user=userRepo.findById(principal.getName()).get();
+		User user=userRepo.findByUsername(principal.getName()).get();
 		System.out.println(" User " + user.getEmail());
 		Company company=companyService.create(companyDto.toCompany(),user);
 		System.out.println(company.toString());
@@ -55,7 +55,7 @@ public class CompanyController {
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public SiteDto createSite(@RequestBody SiteDto siteDto,Principal principal) {
 		System.out.println(" Reached here inside site");
-		User user=userRepo.findById(principal.getName()).get();	
+		User user=userRepo.findByUsername(principal.getName()).get();	
 		Site site=companyService.addSite(siteDto.getCompanyId(), siteDto.toSite(), user);
 		System.out.println(" Reached here end of site");
 		return new SiteDto(site);
@@ -65,7 +65,7 @@ public class CompanyController {
 	@ResponseStatus(value = HttpStatus.OK)
 	@GetMapping("/admin/site")
 	public GenericDataTableResponse<SiteDto> getSites(){
-		List<Site> sites=companyService.getSites("1005944b-7ab7-4b0a-a673-bfdc5e2a1175");
+		List<Site> sites=companyService.getSites("6504e09e-11d9-49f8-b024-3392eaeefdd2"); 
 		GenericDataTableResponse<SiteDto> response=new GenericDataTableResponse<SiteDto>();
 		ArrayList<SiteDto> sitesA=new ArrayList<SiteDto>();
 		sites.forEach(site->sitesA.add(new SiteDto(site)));

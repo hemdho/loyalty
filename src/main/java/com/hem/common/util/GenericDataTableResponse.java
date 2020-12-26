@@ -7,7 +7,7 @@ public class GenericDataTableResponse<T> {
 	private List<T> data;
 	private int page;
 	private int totalPages;
-	private int totalRecords;
+	private long totalRecords;
 	private int pageSize;
 
 	public List<T> getData() {
@@ -34,11 +34,11 @@ public class GenericDataTableResponse<T> {
 		this.totalPages = totalPages;
 	}
 
-	public int getTotalRecords() {
+	public long getTotalRecords() {
 		return totalRecords;
 	}
 
-	public void setTotalRecords(int totalRecords) {
+	public void setTotalRecords(long totalRecords) {
 		this.totalRecords = totalRecords;
 	}
 

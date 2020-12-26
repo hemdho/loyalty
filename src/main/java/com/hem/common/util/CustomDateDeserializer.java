@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -32,6 +33,7 @@ public class CustomDateDeserializer  extends StdDeserializer<Date> {
       throws IOException, JsonProcessingException {
         String date = jsonparser.getText();
         try {
+        	if(!StringUtils.hasText(date)) return null;
             return formatter.getDate(date);
         } catch (ParseException e) {
             throw new RuntimeException(e);

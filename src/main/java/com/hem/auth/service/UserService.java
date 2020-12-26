@@ -133,6 +133,13 @@ public class UserService implements IUserService{
 	}
 
 	@Override
+	public User findUserByUsername(String username) {
+		Optional<User> user=userRepository.findByUsername(username);
+        if(user.isPresent()) return user.get(); 
+        else 
+		return null;
+	}
+	@Override
 	public User findUserByEmail(final String email) {
 		User user= userRepository.findByEmail(email);
 		//System.out.println("#######################User#################### "+user);

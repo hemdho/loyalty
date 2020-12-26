@@ -1,6 +1,8 @@
 package com.hem.loyalty.web.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,8 @@ import com.hem.auth.repository.UserRepository;
 import com.hem.auth.service.IUserService;
 import com.hem.common.util.GenericDataTableResponse;
 import com.hem.exception.RecordNotFoundException;
+import com.hem.loyalty.model.Company;
+import com.hem.loyalty.service.ICompanyService;
 @CrossOrigin
 @RestController
 public class UserController {
@@ -29,6 +33,8 @@ public class UserController {
 	IUserService userService;
 	@Autowired
 	UserRepository userRepo;
+	@Autowired
+	ICompanyService companyService;
 	
 	@PostMapping("/admin/users")
 	@ResponseBody
@@ -37,6 +43,18 @@ public class UserController {
 	//	user.getRoles().forEach(role->System.out.println(role.getName()));
 		return userService.registerNewUserAccount(user);
 	}
+	
+	@GetMapping("/users/defaults")
+	@ResponseBody
+	@ResponseStatus(value=HttpStatus.OK)
+	public Map<String,String> getDefaults() {
+		Map<String,String> defaults=new HashMap<String,String>();
+		Company company=companyService.getAllCompanies().get(0);
+		defaults.put("companyId",company.getId());
+		defaults.put("companyName",company.getName());
+		return defaults;
+	}
+	
 	
 	@GetMapping("/admin/users")
 	@ResponseBody

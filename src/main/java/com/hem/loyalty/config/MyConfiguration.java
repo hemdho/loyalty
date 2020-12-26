@@ -6,12 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.event.ApplicationEventMulticaster;
+import org.springframework.context.event.SimpleApplicationEventMulticaster;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -67,11 +69,11 @@ public class MyConfiguration implements WebMvcConfigurer {
 	 
 	@Bean(name = "currentDateFormat")
 	public String getCurrentDateFormat() {
-		return "dd-MM-yyyy";
+		return "yyyy-MM-dd";
 	}
 	@Bean(name="dateTimeFormatter")
 	public String getCurrentDateTimeFormat(){
-		return "dd-MM-yyyy HH:mm:ss";
+		return "yyyy-MM-dd HH:mm:ss";
 	}
 	@Bean
 	public MyDateTimeFomatter getMyDateTimeFormatter() {
@@ -87,7 +89,17 @@ public class MyConfiguration implements WebMvcConfigurer {
 		messageSource.setDefaultEncoding("UTF-8");
 		return messageSource;
 	}
-	
-	
+	/****
+	 * To execute events async
+	 * @return
+	 */
+	//@Bean(name = "applicationEventMulticaster")
+    public ApplicationEventMulticaster simpleApplicationEventMulticaster() {
+        SimpleApplicationEventMulticaster eventMulticaster =
+          new SimpleApplicationEventMulticaster();
+        
+        eventMulticaster.setTaskExecutor(new SimpleAsyncTaskExecutor());
+        return eventMulticaster;
+    }
 	
 }

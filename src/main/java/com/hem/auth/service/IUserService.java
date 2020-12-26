@@ -34,7 +34,7 @@ public interface IUserService {
 
 	    User findUserByEmail(String email);
 	    
-	    
+	    User findUserByUsername(String username);
 	    
 	    PasswordResetToken getPasswordResetToken(String token);
 
@@ -59,5 +59,6 @@ public interface IUserService {
 		void changeUserEmail(User user, String newEmail) throws CloneNotSupportedException;
 
 		User updateUser2FA(boolean use2fa);
-
+		
+		 
 }

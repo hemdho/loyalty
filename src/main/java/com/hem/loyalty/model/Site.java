@@ -2,6 +2,7 @@ package com.hem.loyalty.model;
 
 import java.util.Date;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -13,20 +14,26 @@ public class Site {
 	
 	@Transient
     public static final String SEQUENCE_NAME = "site_sequence";
-
+	
 	private String id;	
 	private String name;
 	private String code;
-	@DBRef
+	@DBRef(lazy=true)
 	private User user;
 	
 	private Date createdDate;
+	
 	private Address address;
 	private boolean enabled;
 	
 	
 	
-	 
+	public Site() {
+		
+	}
+	public Site(String id) {
+		setId(id);
+	}
 	public boolean isEnabled() {
 		return enabled;
 	}

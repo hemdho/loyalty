@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.hem.auth.model.User;
+import com.hem.common.util.CustomDateSerializer;
 import com.hem.common.util.CustomDateTimeSerializer;
 
 @Document
@@ -27,11 +28,11 @@ public class Company {
 	private String email;
 	private String contactPerson;
 	private String currency;
-	@DBRef
+	@DBRef(lazy = true)
 	@CreatedBy
 	private User user;
 	@CreatedDate
-	@JsonSerialize(using = CustomDateTimeSerializer.class)
+	@JsonSerialize(using = CustomDateSerializer.class)
 	private Date createdDate;
 	@Version
 	private int version;
@@ -40,7 +41,12 @@ public class Company {
 	Set<Address> addresses=new HashSet<Address>();
 	Set<Site> sites=new HashSet<Site>();
 	
-	
+	public Company() {
+		
+	}
+	public Company(String id){
+		setId(id);
+	}
 	public String getPhoneNo() {
 		return phoneNo;
 	}

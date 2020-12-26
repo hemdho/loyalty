@@ -1,9 +1,19 @@
-package com.hem.loyalty.service;
+package com.hem.loyalty.model;
 
 public class SKULabel {
 	private String key;
 	private String value;
 	private int points;
+	private String label;
+	
+
+	public String getLabel() {
+		return label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
+	}
 
 	public String getKey() {
 		return key;

@@ -1,21 +1,19 @@
 package com.hem.common.util;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 
-public class CustomDateTimeSerializer extends StdSerializer<OffsetDateTime> {
+public class CustomDateTimeSerializer extends StdSerializer<Date> {
 
 	Logger logger = LogManager.getLogger(CustomDateTimeSerializer.class);
 	
@@ -23,9 +21,9 @@ public class CustomDateTimeSerializer extends StdSerializer<OffsetDateTime> {
 		
     private static final long serialVersionUID = -2894356342227378312L;
     
-    private DateTimeFormatter formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
+    //private DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
     
-  // private SimpleDateFormat formatter = new SimpleDateFormat(DateFormatter.getCurrentDateFormat());
+  private SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public CustomDateTimeSerializer() {
    // public CustomDateSerializer() {
@@ -38,7 +36,7 @@ public class CustomDateTimeSerializer extends StdSerializer<OffsetDateTime> {
         logger.debug("custome Date serialize created");
     }
 
-    public CustomDateTimeSerializer(final Class<OffsetDateTime> t) {
+    public CustomDateTimeSerializer(final Class<Date> t) {
         super(t);
       //  formatter= new SimpleDateFormat(dateFormatter.getCurrentDateFormat());
        // logger.debug(" cuser Date Serialize created " + dateFormatter.getCurrentDateFormat());
@@ -46,7 +44,10 @@ public class CustomDateTimeSerializer extends StdSerializer<OffsetDateTime> {
     }
 
 	@Override
-	public void serialize(OffsetDateTime value, JsonGenerator gen, SerializerProvider provider) throws IOException {
-		gen.writeString(value.format(formatter));		
+	public void serialize(Date value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+		//if(value!=null)
+		//formatter.format(value.toInstant());
+			System.out.println(formatter.format(value));
+		gen.writeString(formatter.format(value));		
 	}
 }

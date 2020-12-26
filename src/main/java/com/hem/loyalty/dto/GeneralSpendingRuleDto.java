@@ -1,40 +1,39 @@
 package com.hem.loyalty.dto;
 
-import java.util.Set;
+import java.util.List;
 
+import com.hem.loyalty.model.Company;
+import com.hem.loyalty.model.SKULabel;
 import com.hem.loyalty.service.Activity;
 import com.hem.loyalty.service.GeneralSpendingEarningRule;
-import com.hem.loyalty.service.SKULabel;
 
 public class GeneralSpendingRuleDto extends EarningRuleDto{
 	private int pointValue;
-	private Set<String> excludedSKU;
-	private Set<SKULabel> labelsIncluded;
-	private Set<SKULabel> labelExcluded;
+	
+	private int pointValuePerCurrency;
+	private List<SKULabel> labelsIncluded;
+	private List<SKULabel> labelExcluded;
 	private double minOrderValue;
 	private boolean isLastRule;
+	
+	private List<SKULabel> excludedSKUs;
 	public int getPointValue() {
 		return pointValue;
 	}
 	public void setPointValue(int pointValue) {
 		this.pointValue = pointValue;
 	}
-	public Set<String> getExcludedSKU() {
-		return excludedSKU;
-	}
-	public void setExcludedSKU(Set<String> excludedSKU) {
-		this.excludedSKU = excludedSKU;
-	}
-	public Set<SKULabel> getLabelsIncluded() {
+	
+	public List<SKULabel> getLabelsIncluded() {
 		return labelsIncluded;
 	}
-	public void setLabelsIncluded(Set<SKULabel> labelsIncluded) {
+	public void setLabelsIncluded(List<SKULabel> labelsIncluded) {
 		this.labelsIncluded = labelsIncluded;
 	}
-	public Set<SKULabel> getLabelExcluded() {
+	public List<SKULabel> getLabelExcluded() {
 		return labelExcluded;
 	}
-	public void setLabelExcluded(Set<SKULabel> labelExcluded) {
+	public void setLabelExcluded(List<SKULabel> labelExcluded) {
 		this.labelExcluded = labelExcluded;
 	}
 	public double getMinOrderValue() {
@@ -51,31 +50,51 @@ public class GeneralSpendingRuleDto extends EarningRuleDto{
 	}
 	@Override
 	public String toString() {
-		return super.toString()+ " GeneralSpendingRuleDto [pointValue=" + pointValue + ", excludedSKU=" + excludedSKU + ", labelsIncluded="
+		return super.toString()+ " GeneralSpendingRuleDto [pointValue=" + pointValue + ", excludedSKU=" + excludedSKUs + ", labelsIncluded="
 				+ labelsIncluded + ", labelExcluded=" + labelExcluded + ", minOrderValue=" + minOrderValue
 				+ ", isLastRule=" + isLastRule + "]";
 	}
 	
-	public GeneralSpendingEarningRule toGeneralSpendingEarningRule() {
-		GeneralSpendingEarningRule rule=new GeneralSpendingEarningRule();
-		rule.setDescription(getDescription());
-		rule.setExcludedSKU(getExcludedSKU());
-		Activity activity=new Activity();
-		activity.setAllTime(isAllTime());
-		activity.setStartDate(getStartDate());
-		activity.setEndDate(getEndDate());
-		rule.setActivity(activity);
+	public List<SKULabel> getExcludedSKUs() {
+		return excludedSKUs;
+	}
+	public void setExcludedSKUs(List<SKULabel> excludedSKUs) {
+		this.excludedSKUs = excludedSKUs;
+	}
+	public GeneralSpendingRuleDto() {
+		
+	}
+	
+	public GeneralSpendingRuleDto(GeneralSpendingEarningRule earningRule) {
+		super(earningRule);
+		setExcludedSKUs(earningRule.getExcludedSKU());
+		setLabelExcluded(earningRule.getLabelExcluded());
+		setLabelsIncluded(earningRule.getLabelsIncluded());
+		setMinOrderValue(earningRule.getMinOrderValue());
+		setPointValue(earningRule.getPointValue());
+		setPointValuePerCurrency(earningRule.getPointValuePerCurrency());
+		setLastRule(earningRule.isLastRule());
+	}
+	public void toGeneralSpendingEarningRule(GeneralSpendingEarningRule rule) {
+		super.toEarningRule(rule);
+		rule.setExcludedSKU(getExcludedSKUs());
 		rule.setLabelExcluded(getLabelExcluded());
 		rule.setLastRule(isLastRule());
-		rule.setLevels(getLevels());
 		rule.setMinOrderValue(getMinOrderValue());
-		rule.setName(getName());
 		rule.setPointValue(getPointValue());
-		rule.setPriority(getPriority());
-		rule.setSegments(getSegments());
-		rule.setStatus(isEnabled());
-		
+		rule.setPointValue(getPointValue());
+		rule.setPointValuePerCurrency(getPointValuePerCurrency());	
+	}
+	public GeneralSpendingEarningRule toGeneralSpendingEarningRule() {
+		GeneralSpendingEarningRule rule=new GeneralSpendingEarningRule();
+		toGeneralSpendingEarningRule(rule);
 		return rule;
+	}
+	public int getPointValuePerCurrency() {
+		return pointValuePerCurrency;
+	}
+	public void setPointValuePerCurrency(int pointValuePerCurrency) {
+		this.pointValuePerCurrency = pointValuePerCurrency;
 	}
 	
 }

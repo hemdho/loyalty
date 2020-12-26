@@ -16,7 +16,9 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.hem.common.util.GenericResponse;
+import com.hem.exception.InActiveRecordFoundException;
 import com.hem.exception.RecordAlreadyExistException;
+import com.hem.exception.RecordNotFoundException;
 @ControllerAdvice(basePackages = {"com.hem.loyalty"})
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler  {
 	
@@ -126,9 +128,10 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 	        return new ResponseEntity<Object>(bodyOfResponse, new HttpHeaders(), HttpStatus.UNAUTHORIZED);
 	    }
 	    
-	    @ExceptionHandler({ Exception.class })
+	    @ExceptionHandler({ RecordNotFoundException.class,InActiveRecordFoundException.class,Exception.class })
 	    public ResponseEntity<Object> handleInternal(final RuntimeException ex, final WebRequest request) {
 	        logger.error("500 Status Code", ex);
+	        
 	        final GenericResponse bodyOfResponse = new GenericResponse(messages.getMessage("message.error", null, request.getLocale()) + " " + ex.getLocalizedMessage(), "InternalError");
 	        return new ResponseEntity<Object>(bodyOfResponse, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
 	    }

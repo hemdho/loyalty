@@ -1,12 +1,13 @@
 package com.hem.loyalty.service;
 
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.hem.auth.model.User;
+import com.hem.loyalty.model.Company;
 import com.hem.loyalty.model.Level;
 @Document
 public abstract class EarningRule {
@@ -17,34 +18,36 @@ public abstract class EarningRule {
     private int priority;
     private Activity activity;
     @DBRef
-    private Set<Segment> segments;
+    private List<Segment> segments;
     @DBRef
-    private Set<Level> levels;
+    private List<Level> levels;
     private String type;
     private Date createdDate;
-    @DBRef
+    @DBRef(lazy = true)
     private User user;
-
+    @DBRef(lazy = true)
+    private Company company;
+    
 	 public abstract String getId(); 
      public abstract void setId(String id);
 
 
-	public Set<Segment> getSegments() {
+	public List<Segment> getSegments() {
 		return segments;
 	}
 
 
-	public void setSegments(Set<Segment> segments) {
+	public void setSegments(List<Segment> segments) {
 		this.segments = segments;
 	}
 
 
-	public Set<Level> getLevels() {
+	public List<Level> getLevels() {
 		return levels;
 	}
 
 
-	public void setLevels(Set<Level> levels) {
+	public void setLevels(List<Level> levels) {
 		this.levels = levels;
 	}
 
@@ -118,6 +121,12 @@ public abstract class EarningRule {
 	}
 	public void setUser(User user) {
 		this.user = user;
+	}
+	public Company getCompany() {
+		return company;
+	}
+	public void setCompany(Company company) {
+		this.company = company;
 	}
 
 

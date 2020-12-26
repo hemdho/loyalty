@@ -37,7 +37,7 @@ public class Address {
 		this.enabled = enabled;
 	}
 	@CreatedBy
-	@DBRef
+	@DBRef(lazy = true)
 	@JsonIgnore
 	 private User user;
 	 @CreatedDate
@@ -103,6 +103,12 @@ public class Address {
 	}
 	public void setState(String state) {
 		this.state = state;
+	}
+	@Override
+	public String toString() {
+		return "Address [id=" + id + ", street1=" + street1 + ", street2=" + street2 + ", street3=" + street3
+				+ ", area=" + area + ", city=" + city + ", state=" + state + ", postcode=" + postcode + ", enabled="
+				+ enabled + ", user=" + user + ", createdDate=" + createdDate + "]";
 	}
 	
 	

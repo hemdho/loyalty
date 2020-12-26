@@ -1,16 +1,17 @@
 package com.hem.loyalty.model;
 
+import java.util.List;
 import java.util.Map;
 
 public class OrderItem {
 
-	private String id;
+	private Long id;
 	private String itemId;
 	private String itemType;
 	private int quantity;
 	private double rate;
 	private String SKU;
-	private Map<String,String> attributes;
+	private List<SKUAttribute> attributes;
 	
 	
 	public String getSKU() {
@@ -19,16 +20,16 @@ public class OrderItem {
 	public void setSKU(String sku) {
 		this.SKU = sku;
 	}
-	public Map<String, String> getAttributes() {
+	public List<SKUAttribute> getAttributes() {
 		return attributes;
 	}
-	public void setAttributes(Map<String, String> attributes) {
+	public void setAttributes(List<SKUAttribute> attributes) {
 		this.attributes = attributes;
 	}
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getItemId() {

@@ -1,38 +1,53 @@
 package com.hem.loyalty.model;
 
+import java.time.OffsetDateTime;
 import java.util.Date;
 import java.util.List;
 
-public class Order {
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.hem.auth.model.User;
+@Document(value = "orders")
+public class Order {
+	@Id
 	private String orderId;
+	@DBRef(lazy=true)
 	private Customer customer;
 	private List<OrderItem> items;
 	private Date orderDate;
 	private double totalAmount;
 	private String currency;
-	private String companyId;
-	private String siteId;
-	private String userId;
+	@DBRef(lazy=true)
+	private Company company;
+	@DBRef(lazy=true)
+	private Site site;
+	@DBRef(lazy=true)
+	private User user;
+	private String salesMan;
+    private String status;
+    
+    private OffsetDateTime createdDate;
+    
 	
-	
-	public String getCompanyId() {
-		return companyId;
+	public Company getCompany() {
+		return company;
 	}
-	public void setCompanyId(String companyId) {
-		this.companyId = companyId;
+	public void setCompany(Company company) {
+		this.company = company;
 	}
-	public String getSiteId() {
-		return siteId;
+	public Site getSite() {
+		return site;
 	}
-	public void setSiteId(String siteId) {
-		this.siteId = siteId;
+	public void setSite(Site site) {
+		this.site= site;
 	}
-	public String getUserId() {
-		return userId;
+	public User getUser() {
+		return user;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setUser(User user) {
+		this.user = user;
 	}
 	public String getOrderId() {
 		return orderId;
@@ -69,6 +84,24 @@ public class Order {
 	}
 	public void setCurrency(String currency) {
 		this.currency = currency;
+	}
+	public String getSalesMan() {
+		return salesMan;
+	}
+	public void setSalesMan(String salesMan) {
+		this.salesMan = salesMan;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public OffsetDateTime getCreatedDate() {
+		return createdDate;
+	}
+	public void setCreatedDate(OffsetDateTime createdDate) {
+		this.createdDate = createdDate;
 	}
 	
 	

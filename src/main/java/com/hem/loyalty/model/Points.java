@@ -1,25 +1,33 @@
 package com.hem.loyalty.model;
 
+import java.time.OffsetDateTime;
 import java.util.Date;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.hem.auth.model.User;
 @Document
 public class Points {
-	
-	private int id;
-	private long customerId;
+	@Transient
+	public static final String SEQUENCE_NAME = "points_sequence";
+	@Id
+	private long id;
+	@DBRef(lazy=true)
+	private Customer customer;
 	private String orderId;
 	private int points;
 	private Date orderDate;
 	private String rules;
-    private Date createdDate;
-    @DBRef
+    private OffsetDateTime createdDate;
+    private String salesMan;
+    @DBRef(lazy = true)
     private User user; 
-    @DBRef
+    @DBRef(lazy = true)
     private Company company;
+    @DBRef(lazy = true)
     private Site site;
 	
 	
@@ -48,20 +56,20 @@ public class Points {
 		this.site = site;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public long getCustomerId() {
-		return customerId;
+	public Customer getCustomer() {
+		return customer;
 	}
 
-	public void setCustomerId(long customerId) {
-		this.customerId = customerId;
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 	public String getOrderId() {
@@ -74,6 +82,14 @@ public class Points {
 
 	public int getPoints() {
 		return points;
+	}
+
+	public String getSalesMan() {
+		return salesMan;
+	}
+
+	public void setSalesMan(String salesMan) {
+		this.salesMan = salesMan;
 	}
 
 	public void setPoints(int points) {
@@ -96,11 +112,11 @@ public class Points {
 		this.rules = rules;
 	}
 
-	public Date getCreatedDate() {
+	public OffsetDateTime getCreatedDate() {
 		return createdDate;
 	}
 
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(OffsetDateTime createdDate) {
 		this.createdDate = createdDate;
 	}
 

@@ -1,9 +1,9 @@
 package com.hem.loyalty.model;
 
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.hem.auth.model.User;
-import com.hem.common.util.CustomDateTimeSerializer;
+import com.hem.common.util.CustomOffsetDateTimeSerializer;
 
 @Document(collection = "customers")
 public class Customer {
@@ -26,24 +26,27 @@ public class Customer {
 	private String lastName;
 	private String middleName;
 	private Date dob;
-	private Date annyversaryDate;
+	private Date anniversary;
 	private String gender;
 	private String mobileNo;
-	private String emailid;
+	private String email;
 	@DBRef
-	private List<Level> levels;
-	@DBRef
+	private Level level;
+	@DBRef(lazy = true)
 	private Company company;
 	private boolean enabled;
-
+    @DBRef(lazy = true)
 	@CreatedBy
 	private User user;
 	@CreatedDate
-	@JsonSerialize(using = CustomDateTimeSerializer.class)
-	private Date createdDate;
+	@JsonSerialize(using = CustomOffsetDateTimeSerializer.class)
+	private OffsetDateTime createdDate;
 
 	private List<Address> addresses = new ArrayList<Address>();
 
+	@DBRef(lazy=true)
+	private CustomerLoyaltyInfo customerLoyaltyInfo;
+	
 	public boolean isEnabled() {
 		return enabled;
 	}
@@ -58,16 +61,8 @@ public class Customer {
 
 	public void setCompany(Company company) {
 		this.company = company;
-	}
-
-	public List<Level> getLevels() {
-		return levels;
-	}
-
-	public void setLevels(List<Level> levels) {
-		this.levels = levels;
-	}
-
+	} 
+	
 	public static String getSequenceName() {
 		return SEQUENCE_NAME;
 	}
@@ -86,6 +81,14 @@ public class Customer {
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
+	}
+
+	public CustomerLoyaltyInfo getCustomerLoyaltyInfo() {
+		return customerLoyaltyInfo;
+	}
+
+	public void setCustomerLoyaltyInfo(CustomerLoyaltyInfo customerLoyaltyInfo) {
+		this.customerLoyaltyInfo = customerLoyaltyInfo;
 	}
 
 	public String getLastName() {
@@ -112,12 +115,12 @@ public class Customer {
 		this.dob = dob;
 	}
 
-	public Date getAnnyversaryDate() {
-		return annyversaryDate;
+	public Date getAnniversary() {
+		return anniversary;
 	}
 
-	public void setAnnyversaryDate(Date annyversaryDate) {
-		this.annyversaryDate = annyversaryDate;
+	public void setAnniversary(Date anniversary) {
+		this.anniversary =  anniversary ;
 	}
 
 	public String getGender() {
@@ -136,12 +139,12 @@ public class Customer {
 		this.mobileNo = mobileNo;
 	}
 
-	public String getEmailid() {
-		return emailid;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setEmailid(String emailid) {
-		this.emailid = emailid;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public User getUser() {
@@ -152,11 +155,11 @@ public class Customer {
 		this.user = user;
 	}
 
-	public Date getCreatedDate() {
+	public OffsetDateTime getCreatedDate() {
 		return createdDate;
 	}
 
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(OffsetDateTime createdDate) {
 		this.createdDate = createdDate;
 	}
 
@@ -168,5 +171,22 @@ public class Customer {
 		this.addresses = addresses;
 
 	}
+
+	public Level getLevel() {
+		return level;
+	}
+
+	public void setLevel(Level level) {
+		this.level = level;
+	}
+
+	@Override
+	public String toString() {
+		return "Customer [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", middleName="
+				+ middleName + ", dob=" + dob + ", anniversary=" + anniversary + ", gender=" + gender + ", mobileNo="
+				+ mobileNo + ", email=" + email + ", level=" + level + ", company=" + company + ", enabled=" + enabled
+				+ ", user=" + user + ", createdDate=" + createdDate + ", addresses=" + addresses + "]";
+	}
+	
 
 }

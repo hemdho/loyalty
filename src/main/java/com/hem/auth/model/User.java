@@ -44,6 +44,14 @@ public class User implements Serializable {
 	private Date createdDate;
 	
 	
+	
+	public User() {
+		
+	}
+	public User(String id) {
+		this.id=id;
+	}
+	
 	public String getId() {
 		return id;
 	}
